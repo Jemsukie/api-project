@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import parse from "html-react-parser";
 import cities from "../scripts/cities";
 
 const Container = () => {
@@ -49,9 +50,27 @@ const displayMatches = (city) => {
   return matchArray.map((place) => {
     // const regex = new RegExp(city, "gi"); // Find all match in the strings and ignore cases
     // Then we'll render the lists as highlighted
+
+    let regex = "";
+    let cityName = place.city;
+    let stateName = place.state;
+
+    if (city !== "") {
+      regex = new RegExp(city, "gi"); // Find all match in the strings and ignore cases
+      // Then we'll render the lists as highlighted
+      cityName = place.city.replace(
+        regex,
+        `<span class="highlight">${city}</span>`
+      );
+      stateName = place.state.replace(
+        regex,
+        `<span class="highlight">${city}</span>`
+      );
+    }
+
     return {
-      cityName: <>{place.city}</>,
-      stateName: <>{place.state}</>,
+      cityName: parse(cityName),
+      stateName: parse(stateName),
       population: numberWithCommas(place.population),
     };
   });
