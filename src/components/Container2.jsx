@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
-import { data } from "./data";
 
 const Container = () => {
-  const [cities, setCities] = useState(data);
-  const [filteredCities, setFilteredCities] = useState(data);
+  const [cities, setCities] = useState([]);
+  const [filteredCities, setFilteredCities] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const endpoint =
+      "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+    fetch(endpoint)
+      .then((d) => d.json())
+      .then((d) => setCities(d))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     if (searchTerm) {
@@ -19,6 +28,14 @@ const Container = () => {
       setFilteredCities([]);
     }
   }, [searchTerm, cities]);
+
+  if (loading) {
+    return (
+      <div className="container-search">
+        <span id="count">Loading</span>
+      </div>
+    );
+  }
 
   return (
     <div className="container-search">
