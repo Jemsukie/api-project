@@ -6,9 +6,10 @@ import Container from './components/Container';
 
 function App() {
   return (
-    <div>
-      <Nav />
-      <Container />
+    <div className="App"><Nav />
+      <header className="App-header">
+        <Container />
+      </header>
     </div>
   );
 }

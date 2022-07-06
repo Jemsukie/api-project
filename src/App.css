@@ -1,0 +1,63 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #0D171F;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.container-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  padding-top: 100px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+ul li {
+  list-style: none;
+  text-align: left;
+  background: #E18231;
+  border-radius: 10px;
+  margin-bottom: 1px;
+  padding: 5px;
+  text-transform: capitalize; 
+  /* Without this, the highlighted substrings will render at original state
+  *  Let's capitalize the substrings first letter if it's proper
+  */
+}
+
+#count {
+  color: white;
+}
+
+input[type="text"] {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-top: 20px;
+  padding: 10px 10px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 20px;
+  height: 20px;
+}
+
+.highlight {
+  background: #343224;
+  font-weight: bold;
+}
+
