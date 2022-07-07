@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import parse from "html-react-parser";
+import Count from "./Count";
+import useCities from "../scripts/useCities";
 //import cities from "../scripts/cities";
 
 const Container = () => {
@@ -8,20 +10,25 @@ const Container = () => {
   //passage([endpoint], readFetch).then((data) => cities.push(...data));
 
   const [phrase, setPhrase] = useState("");
-  const [cities, setCities] = useState([]);
   const [displayList, setDisplayList] = useState([]);
+  const endpoint =
+    "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
 
-  useEffect(() => {
-    const endpoint =
-      "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
-    fetch(endpoint)
-      .then((d) => d.json())
-      .then((d) => setCities(d));
-  }, []);
+  // Let's call a custom hook that will consume the API
+  const { cities, loading } = useCities(endpoint);
 
   useEffect(() => {
     setDisplayList(displayMatches(phrase, cities));
   }, [phrase, cities]);
+
+  // The loading phrase would show up if the fetch API is still loading.
+  if (loading) {
+    return (
+      <div className="container-search">
+        <span id="count">Loading...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="container-search">
@@ -34,24 +41,6 @@ const Container = () => {
       <span>(↑) Type here to check cities (↑)</span>
       <Count list={displayList} />
     </div>
-  );
-};
-
-const Count = (props) => {
-  return (
-    <ul>
-      {props.list.map((item, index) => {
-        return (
-          <li key={index}>
-            <span className="name">
-              {item.cityName}, {item.stateName}
-              <>&nbsp;</>
-            </span>
-            <span className="population">{item.population}</span>
-          </li>
-        );
-      })}
-    </ul>
   );
 };
 
