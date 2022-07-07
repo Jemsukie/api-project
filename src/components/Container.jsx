@@ -17,9 +17,11 @@ const Container = () => {
     fetch(endpoint)
       .then((d) => d.json())
       .then((d) => setCities(d));
+  }, []);
 
+  useEffect(() => {
     setDisplayList(displayMatches(phrase, cities));
-  }, [phrase]);
+  }, [phrase, cities]);
 
   return (
     <div className="container-search">
