@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import parse from "html-react-parser";
-import cities from "../scripts/cities";
+//import cities from "../scripts/cities";
 
 const Container = () => {
   //const endpoint =
@@ -8,6 +8,18 @@ const Container = () => {
   //passage([endpoint], readFetch).then((data) => cities.push(...data));
 
   const [phrase, setPhrase] = useState("");
+  const [cities, setCities] = useState([]);
+  const [displayList, setDisplayList] = useState([]);
+
+  useEffect(() => {
+    const endpoint =
+      "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+    fetch(endpoint)
+      .then((d) => d.json())
+      .then((d) => setCities(d));
+
+    setDisplayList(displayMatches(phrase, cities));
+  }, [phrase]);
 
   return (
     <div className="container-search">
@@ -18,18 +30,15 @@ const Container = () => {
       />
       <br />
       <span>(↑) Type here to check cities (↑)</span>
-
-      <Count city={phrase} />
+      <Count list={displayList} />
     </div>
   );
 };
 
 const Count = (props) => {
-  const displayList = displayMatches(props.city);
-
   return (
     <ul>
-      {displayList.map((item, index) => {
+      {props.list.map((item, index) => {
         return (
           <li key={index}>
             <span className="name">
@@ -44,7 +53,7 @@ const Count = (props) => {
   );
 };
 
-const displayMatches = (city) => {
+const displayMatches = (city, cities) => {
   let matchArray = findMatches(city, cities); // Find match of input from array of object cities
 
   return matchArray.map((place) => {
