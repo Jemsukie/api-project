@@ -2,8 +2,8 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import Nav from "./components/Nav";
-import Container from "./components/Container";
-import Container2 from "./components/Container2";
+// import Container from "./components/Container";
+import SearchCity from "./components/SearchCity";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Nav />
       <header className="App-header">
         {/*<Container />*/}
-        <Container2 />
+        <SearchCity />
       </header>
     </div>
   );

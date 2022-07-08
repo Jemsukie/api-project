@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { useCities } from "../hooks/useCities";
 
-const Container = () => {
+import { useCities } from "../hooks/useCities";
+import TextWithHighlight from "./TextWithHighlight";
+
+const SearchCity = () => {
   const { cities, loading } = useCities();
 
   const [filteredCities, setFilteredCities] = useState([]);
@@ -68,29 +70,4 @@ const Container = () => {
   );
 };
 
-const TextWithHighlight = ({ text = "", term = "" }) => {
-  if (!term.trim()) {
-    return <span>{text}</span>;
-  }
-  const regex = new RegExp(`(${term})`, "gi");
-  const parts = text.split(regex);
-
-  return (
-    <span>
-      {parts.filter(String).map((part, i) => {
-        return regex.test(part) ? (
-          <>
-            {/*<mark key={i}>{part}</mark>*/}
-            <span key={i} className="highlight">
-              {part}
-            </span>
-          </>
-        ) : (
-          <span key={i}>{part}</span>
-        );
-      })}
-    </span>
-  );
-};
-
-export default Container;
+export default SearchCity;
