@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react";
+import { useCities } from "../hooks/useCities";
 
 const Container = () => {
-  const [cities, setCities] = useState([]);
+  const { cities, loading } = useCities();
+
   const [filteredCities, setFilteredCities] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    const endpoint =
-      "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
-    fetch(endpoint)
-      .then((d) => d.json())
-      .then((d) => setCities(d))
-      .finally(() => setLoading(false));
-  }, []);
 
   useEffect(() => {
     if (searchTerm) {
