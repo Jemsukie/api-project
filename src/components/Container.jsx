@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import parse from "html-react-parser";
 import Count from "./Count";
 import useCities from "../scripts/useCities";
+import useCityList from "../scripts/useCityList";
 //import cities from "../scripts/cities";
 
 const Container = () => {
@@ -11,15 +12,14 @@ const Container = () => {
 
   const [phrase, setPhrase] = useState("");
   const [displayList, setDisplayList] = useState([]);
-  const endpoint =
-    "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
 
   // Let's call a custom hook that will consume the API
-  const { cities, loading } = useCities(endpoint);
+  //const { cities, loading } = useCities("");
+  const { cityList, loading } = useCityList("");
 
   useEffect(() => {
-    setDisplayList(displayMatches(phrase, cities));
-  }, [phrase, cities]);
+    setDisplayList(displayMatches(phrase, cityList));
+  }, [phrase, cityList]);
 
   // The loading phrase would show up if the fetch API is still loading.
   if (loading) {
@@ -29,7 +29,7 @@ const Container = () => {
       </div>
     );
   }
-
+  console.log(JSON.stringify(cityList));
   return (
     <div className="container-search">
       <input
